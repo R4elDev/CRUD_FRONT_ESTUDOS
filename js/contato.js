@@ -1,20 +1,33 @@
 'user strict'
 
+/********* ARQUIVO QUE TRABALHA COM OS CONTATOS **************/
+
 
 // Fazendo GET no FRONT de todos os contatos
-async function getContatos() {
+export async function getContatos() {
     const url = `https://bakcend-fecaf-render.onrender.com/contatos`
 
     const response = await fetch(url) // Trazer os dados de forma completa
 
     const data = await response.json() // Extrair os dados para retornar o json
-    console.log(data)
+    
     return data
 }
 
 // Fazendo GET no FRONT de somente 1 CONTATO ESPECIFICO 
 async function getContato(id) {
     const url = `https://bakcend-fecaf-render.onrender.com/contatos/${id}`
+
+    const response = await fetch(url) // Trazer os dados de forma completa
+
+    const data = await response.json() // Extrair os dados para retornar o json
+    
+    return data
+}
+
+// Fazendo GET no FRONT de somente 1 contato pelo nome
+export async function getContatosPorNome(nome) {
+    const url = `https://bakcend-fecaf-render.onrender.com/contatos?nome_like=^${nome}`
 
     const response = await fetch(url) // Trazer os dados de forma completa
 
@@ -73,3 +86,4 @@ async function deletContato(id){
 
     return response.ok
 }
+
