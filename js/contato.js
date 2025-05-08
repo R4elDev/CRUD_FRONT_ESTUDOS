@@ -37,7 +37,7 @@ export async function getContatosPorNome(nome) {
 }
 
 // POST de um CONTATO
-async function postContato(contato) {
+export async function postContato(contato) {
     const url = `https://bakcend-fecaf-render.onrender.com/contatos`
 
     // Opçoes do FETCH

@@ -1,6 +1,6 @@
 'use strict'
 
-import { getContatos, getContatosPorNome} from "./contato.js"
+import { getContatos, getContatosPorNome, postContato} from "./contato.js"
 
 
 function criarCard (contato){
@@ -21,7 +21,8 @@ function criarCard (contato){
 
 async function exibirContatos(){
     const contatos = await getContatos()
-    
+    const container = document.getElementById('container')
+    container.replaceChildren('')
     contatos.forEach(criarCard)
 }
 
@@ -35,6 +36,34 @@ async function exibirPesquisa(evento) {
     }
 }
 
+function cadastrarContato(){
+    document.querySelector('main').className = 'form-show'
+}
+
+function abrirHome(){
+    document.querySelector('main').className = 'card-show'
+}
+
+async function salvarContato(){
+    const contato = {
+        "nome"    : document.getElementById('nome').value,
+        "celular" : document.getElementById('celular').value,
+        "foto"    : document.getElementById('foto').value,
+        "email"   : document.getElementById('email').value,
+        "endereco": document.getElementById('endereco').value,
+        "cidade"  : document.getElementById('cidade').value 
+    }
+
+    if(await postContato(contato)){
+        await exibirContatos()
+        abrirHome()
+        alert('Cadastro Realizado com Sucesso')
+    }
+}
+
 exibirContatos()
 
 document.getElementById('pesquisar').addEventListener('keydown',exibirPesquisa)
+document.getElementById('novo-contato').addEventListener('click',cadastrarContato)
+document.getElementById('cancelar').addEventListener('click',abrirHome)
+document.getElementById('salvar').addEventListener('click',salvarContato)
