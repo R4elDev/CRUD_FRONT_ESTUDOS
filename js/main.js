@@ -2,6 +2,8 @@
 
 import { getContatos, getContatosPorNome, postContato} from "./contato.js"
 
+import { uploadImageToAzure } from "./uploadImageToAzre.js"
+
 
 function criarCard (contato){
     const container = document.getElementById('container')
@@ -45,10 +47,21 @@ function abrirHome(){
 }
 
 async function salvarContato(){
+    
+
+    const uploadParams = {
+        file: document.getElementById('foto').files[0],
+        storageAccount: 'uploadimagerael',
+        sasToken: 'sp=racwdli&st=2025-05-15T14:03:38Z&se=2025-05-15T22:03:38Z&sv=2024-11-04&sr=c&sig=JCDTHSWaYAbau6BH1mt%2B%2BFgrqISfcvUvGUbZBN1flNs%3D',
+        containerName: 'fotos',
+    };
+
+    
+
     const contato = {
         "nome"    : document.getElementById('nome').value,
         "celular" : document.getElementById('celular').value,
-        "foto"    : document.getElementById('foto').value,
+        "foto"    : await uploadImageToAzure(uploadParams),
         "email"   : document.getElementById('email').value,
         "endereco": document.getElementById('endereco').value,
         "cidade"  : document.getElementById('cidade').value 
